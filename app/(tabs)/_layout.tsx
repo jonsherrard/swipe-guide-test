@@ -33,6 +33,7 @@ export default function TabLayout() {
           title: 'Guides',
           tabBarLabelStyle: { paddingTop: 4 },
           tabBarIconStyle: { marginTop: 10 },
+          tabBarAccessibilityLabel: 'Guides',
           tabBarIcon: ({ color }) => (
             <IconSymbol
               size={28}
@@ -48,6 +49,7 @@ export default function TabLayout() {
           title: 'Favorites',
           tabBarLabelStyle: { paddingTop: 4 },
           tabBarIconStyle: { marginTop: 10 },
+          tabBarAccessibilityLabel: 'Favorites',
           tabBarIcon: ({ color }) => (
             <IconSymbol
               size={28}

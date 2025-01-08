@@ -1,0 +1,28 @@
+appId: com.devular.swipeguidetest
+---
+# Launch the Expo app
+- openLink: exp://10.153.225.196:8081
+
+# Wait for the app to load
+- waitForAnimationToEnd
+
+- assertVisible: "Guides"
+- tapOn:
+    point: "82%,45%"
+- assertVisible: "Video"
+
+- tapOn:
+    text: "Like"
+- assertNotVisible: "Like"
+
+- tapOn:
+    text: "Back"
+- assertVisible: "Favorites"
+
+- tapOn:
+    text: "Favorites"
+
+- waitForAnimationToEnd
+
+- assertVisible: 
+    id: "guide-card-0"

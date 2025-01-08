@@ -9,6 +9,7 @@ import { router, Link, type Href } from 'expo-router'
 export const GuideCard = ({ guide }: { guide: Guide }) => {
   return (
     <Link
+      testID={`guide-card-${guide.id}`}
       href={guide.href as Href}
       key={guide.id}
       asChild

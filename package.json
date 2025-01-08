@@ -8,10 +8,11 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "test": "jest --watchAll",
+    "test": "maestro test .maestro/test.yaml",
     "lint": "expo lint",
     "lint:biome": "biome lint .",
-    "release:debug": "npm run lint:biome && node ./scripts/release-debug.js"
+    "release:debug": "npm run lint:biome && npm run test && node ./scripts/release-debug.js",
+    "build:ios:local": "eas build --profile development-simulator --platform ios --local" 
   },
   "jest": {
     "preset": "jest-expo"

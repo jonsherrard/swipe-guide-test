@@ -1,50 +1,65 @@
-# Welcome to your Expo app 👋
+# Swipe Guide Test App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is a React Native application built with Expo, designed to provide guides and related functionalities. This README will guide you through setting up, running, and testing various aspects of the app.
 
-## Get started
+## Prerequisites
 
-1. Install dependencies
+- Node.js (version 20 or 22)
+- npm (Node Package Manager)
+- Expo CLI
 
-   ```bash
+## Setup
+
+1. **Clone the repository:**
+
+   ```sh
+   git clone git@github.com:jonsherrard/swipe-guide-test.git
+   cd swipe-guide-test
+   ```
+
+2. **Install dependencies:**
+
+   ```sh
    npm install
    ```
 
-2. Start the app
+3. **Start the Expo server:**
 
-   ```bash
-    npx expo start
+   ```sh
+   npm start
    ```
 
-In the output, you'll find options to open the app in a
+   This will start the Expo development server. You can then use the Expo Go app on your mobile device or an emulator to run the app.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Running the App
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### On Android
 
-## Get a fresh project
+- Ensure your Android device or emulator is connected and configured.
+- Use the Expo Go app to scan the QR code provided by the Expo server.
 
-When you're ready, run:
+### On iOS
 
-```bash
-npm run reset-project
-```
+- Use an iOS device or simulator.
+- Open the Expo Go app and scan the QR code.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Application Structure
 
-## Learn more
+- **Home Screen (`index.tsx`)**: Displays a list of guides using the `GuideCard` component. Data is fetched using `react-query` and displayed in a responsive grid layout.
+- **Guide Page (`[id].tsx`)**: Shows detailed information about a specific guide, including steps and tips. It uses `react-query` for data fetching and displays related guides.
+- **API Integration (`[...endpoint]+api.ts`)**: Handles API requests to the backend, ensuring data is fetched and errors are managed effectively.
 
-To learn more about developing your project with Expo, look at the following resources:
+## Testing
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Testing is conducted using Maestro, a mobile UI testing framework. The test scenarios are defined in `test.yaml`, which automates the app's UI interactions and assertions.
 
-## Join the community
+### Running Tests
 
-Join our community of developers creating universal apps.
+1. **Install Maestro CLI**: Follow the instructions on the Maestro website to install the CLI tool.
+2. **Execute Tests**: Run the following command to execute the test suite:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+   ```sh
+   maestro test .maestro/test.yaml
+   ```
+
+   This will run the predefined test scenario, ensuring the app's functionality is as expected.
