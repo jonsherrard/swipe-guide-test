@@ -1,94 +1,93 @@
-import { Image, StyleSheet, Platform } from 'react-native'
+import { GuideCard } from '@/components/GuideCard'
+import type { Guide } from '@/types/guide'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import type { Href } from 'expo-router'
+import { isWeb, ScrollView, Spinner, Text, YStack } from 'tamagui'
+const baseUrl = 'http://127.0.0.1:8081'
 
-import { HelloWave } from '@/components/HelloWave'
-import ParallaxScrollView from '@/components/ParallaxScrollView'
-import { ThemedText } from '@/components/ThemedText'
-import { ThemedView } from '@/components/ThemedView'
-import { Button, Heading, View } from 'tamagui'
-
-export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }
-    >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <View
-        flex={1}
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Heading
-          size="$10"
-          color="$violet10"
-        >
-          Welcome to Tamagui
-        </Heading>
-        <Button
-          size="$6"
-          theme="active"
-        >
-          Press me
-        </Button>
-      </View>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  )
+export const dataTransferObject = (apiResponse: any): Guide[] => {
+  return apiResponse.map((guide: any) => ({
+    id: guide.Id,
+    mainTask: guide.MainTask,
+    mainTaskSummary: guide.MainTaskSummary,
+    categories: guide.Categories,
+    ingredients: guide.Ingredients,
+    requirements: guide.Requirements,
+    tips: guide.Tips,
+    views: guide.Views,
+    authorsCount: guide.AuthorsCount,
+    href: `/guides/${String(guide.Id)}` as Href,
+  }))
 }
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-})
+export default function HomeScreen() {
+  const queryClient = useQueryClient()
+  // Fetch the data using react-query
+  const { isPending, isError, data, error } = useQuery({
+    queryKey: ['guides'],
+    queryFn: async () => {
+      const response = await fetch(`${baseUrl}/api/guides`)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      const guides = dataTransferObject(await response.json())
+      guides.forEach((guide) => {
+        queryClient.setQueryData(['guide', `guide-${guide.id}`], guide)
+      })
+      return guides
+    },
+  })
+
+  return (
+    <YStack
+      bg="$color1"
+      mih="100%"
+      gap="$4"
+      f={1}
+    >
+      {isPending ? (
+        <Spinner
+          size="large"
+          width={64}
+          height={64}
+          alignSelf="center"
+          marginVertical="auto"
+          color="$accentColor"
+        />
+      ) : isError ? (
+        <Text>Error: {error?.message}</Text>
+      ) : isWeb ? (
+        <YStack
+          width="100%"
+          gap="$4"
+          $gtSm={{
+            gridTemplateColumns: 'repeat(2, 1fr)',
+          }}
+          $gtMd={{
+            gridTemplateColumns: 'repeat(3, 1fr)',
+          }}
+          $platform-web={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(1, 1fr)',
+          }}
+        >
+          {data?.map((guide: Guide) => (
+            <GuideCard
+              guide={guide}
+              key={guide.id}
+            />
+          ))}
+        </YStack>
+      ) : (
+        <ScrollView>
+          {data?.map((guide: Guide) => (
+            <GuideCard
+              guide={guide}
+              key={guide.id}
+            />
+          ))}
+        </ScrollView>
+      )}
+    </YStack>
+  )
+}
