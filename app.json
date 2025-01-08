@@ -36,6 +36,18 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c6b379b5-5276-4593-ad28-e83df954169e"
+      }
+    },
+    "owner": "devular",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/c6b379b5-5276-4593-ad28-e83df954169e"
     }
   }
 }

@@ -9,7 +9,9 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "lint:biome": "biome lint .",
+    "release:debug": "node ./scripts/release-debug.js"
   },
   "jest": {
     "preset": "jest-expo"
@@ -44,7 +46,8 @@
     "react-native-screens": "~4.4.0",
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
-    "tamagui": "^1.121.7"
+    "tamagui": "^1.121.7",
+    "expo-updates": "~0.26.10"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
