@@ -47,7 +47,7 @@ This is a React Native application built with Expo, designed to provide guides a
 
 - **Home Screen (`index.tsx`)**: Displays a list of guides using the `GuideCard` component. Data is fetched using `react-query` and displayed in a responsive grid layout.
 - **Guide Page (`[id].tsx`)**: Shows detailed information about a specific guide, including steps and tips. It uses `react-query` for data fetching and displays related guides.
-- **API Integration (`[...endpoint]+api.ts`)**: Handles API requests to the backend, ensuring data is fetched and errors are managed effectively.
+- **API Integration (`[...endpoint]+api.ts`)**: Proxies API requests to the backend, ensuring expo-router web can fetch data without CORS issues.
 
 ## Testing
 
