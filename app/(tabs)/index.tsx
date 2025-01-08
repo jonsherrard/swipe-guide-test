@@ -1,25 +1,11 @@
 import { GuideCard } from '@/components/GuideCard'
 import type { Guide } from '@/types/guide'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import type { Href } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { isWeb, ScrollView, Spinner, Text, YStack } from 'tamagui'
-const baseUrl = 'http://127.0.0.1:8081'
+import { dataTransferObject } from '@/utilities/dto'
 
-export const dataTransferObject = (apiResponse: any): Guide[] => {
-  return apiResponse.map((guide: any) => ({
-    id: guide.Id,
-    mainTask: guide.MainTask,
-    mainTaskSummary: guide.MainTaskSummary,
-    categories: guide.Categories,
-    ingredients: guide.Ingredients,
-    requirements: guide.Requirements,
-    tips: guide.Tips,
-    views: guide.Views,
-    authorsCount: guide.AuthorsCount,
-    href: `/guides/${String(guide.Id)}` as Href,
-  }))
-}
+const baseUrl = 'http://127.0.0.1:8081'
 
 export default function HomeScreen() {
   const queryClient = useQueryClient()
@@ -46,6 +32,7 @@ export default function HomeScreen() {
         mih="100%"
         gap="$4"
         f={1}
+        paddingBottom="$16"
       >
         {isPending ? (
           <Spinner

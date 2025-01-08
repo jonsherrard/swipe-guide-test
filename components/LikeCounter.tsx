@@ -20,6 +20,7 @@ export const LikeCounter = ({
       size="$2"
       backgroundColor="$background"
       padding="$0"
+      paddingHorizontal="$2"
       pressStyle={
         !readOnly
           ? {

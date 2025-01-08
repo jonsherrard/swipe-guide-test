@@ -43,6 +43,10 @@ export default function RootLayout() {
           >
             <Stack>
               <Stack.Screen
+                name="guides/[id]"
+                options={{ title: '', headerBackTitle: 'Back' }}
+              />
+              <Stack.Screen
                 name="(tabs)"
                 options={{ headerShown: false, title: 'Guides' }}
               />

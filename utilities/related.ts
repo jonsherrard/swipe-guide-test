@@ -1,4 +1,4 @@
-import type { Guide } from '~/types/guide'
+import type { Guide } from '@/types/guide'
 
 export const getRelatedGuides = (
   categories: string[] | undefined,
